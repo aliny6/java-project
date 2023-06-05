@@ -3,19 +3,21 @@ import com.sun.tools.javac.Main;
 import java.util.*;
 import java.util.ArrayList;
 public class Restaurant {
+    public static int openfoodID=0;
     public static Restaurant open;
     public static int shuffle=1;
     public static List<Integer> list = new ArrayList<>();
     public ArrayList<Integer> deactive= new ArrayList<>();
-    public String ID;
+    public int ID;
     public String loc;
     public ArrayList<String> typ;
     public ArrayList<Integer> foodID;
     public ArrayList<String> foodname;
     public ArrayList<Integer> foodprice;
     public ArrayList<Integer> fooddis;
+    public ArrayList<Integer> foodrating;
     public static ArrayList<Restaurant> restaurant=new ArrayList<>();
-    private Restaurant(String ID,String loc,ArrayList<String> typ,ArrayList<String> foodname,ArrayList<Integer> foodprice,ArrayList<Integer> fooddis,ArrayList<Integer> foodID,ArrayList<Integer> deactive){
+    private Restaurant(int ID,String loc,ArrayList<String> typ,ArrayList<String> foodname,ArrayList<Integer> foodprice,ArrayList<Integer> fooddis,ArrayList<Integer> foodID,ArrayList<Integer> deactive,ArrayList<Integer> foodrating){
         this.ID=ID;
         this.loc=loc;
         this.typ=typ;
@@ -24,10 +26,12 @@ public class Restaurant {
         this.foodprice=foodprice;
         this.foodID=foodID;
         this.deactive=deactive;
+        this.foodrating=foodrating;
     }
-    static void openRestaurant(String ID){
+    static void addRestaurant(){}
+    static void openRestaurant(int ID){
         for (int i=0;i<restaurant.size();i++){
-            if(restaurant.get(i).ID.equals(ID)){
+            if(restaurant.get(i).ID==(ID)){
                 open=restaurant.get(i);
                 return;
             }
@@ -52,14 +56,14 @@ public class Restaurant {
     static void editname(int ID,String name,Restaurant open){
         for(int i=0;i<open.foodname.size();i++){
             if(open.foodID.get(i)==(ID)){
-                open.foodname.get(i)=name;
+                open.foodname.set(i,name);
             }
         }
     }
     static void editprice(int ID,int price,Restaurant open){
         for(int i=0;i<open.foodname.size();i++){
             if(open.foodID.get(i)==(ID)){
-                open.foodprice.get(i)=price;
+                open.foodprice.set(i,price);
             }
         }
     }
@@ -68,6 +72,7 @@ public class Restaurant {
         open.foodname.add(name);
         open.foodID.add(list.get(shuffle));
         open.fooddis.add(0);
+        open.foodrating.add(0);
     }
     static void deletefood(Restaurant open,int ID){
         int s=0;
@@ -101,7 +106,18 @@ public class Restaurant {
     static void discount(int ID,Restaurant open,int dis){
         for (int i=0;i<open.foodID.size();i++){
             if(open.foodID.get(i)==ID&&dis<51&&open.fooddis.get(i)==0){
-                open.fooddis.get(i)=dis;
+                open.fooddis.set(i,dis);
+                return;
+            }
+        }
+    }
+    static void selectfood(int ID){
+        openfoodID=ID;
+    }
+    static void displayrating(){
+        for (int i=0;i<open.foodID.size();i++){
+            if(open.foodID.get(i).equals(openfoodID)){
+                System.out.println(open.foodrating.get(i));
                 return;
             }
         }
